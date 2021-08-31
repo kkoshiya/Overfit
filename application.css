@@ -53,19 +53,31 @@ table {
 .body-container{
   text-align: center;
   /* position: relative; */
+  display: flex;
+  margin-left: 4%;
 }
 
 .chart-container {
   width: 50%;
   display: inline-block;
-  padding-top: 10%;
+  margin-top: 7%;
+  /* border: 5px solid lightgreen; */
 }
+
 
 #background {
   position: relative;
   z-index: -1;
   width: 100%;
   height: 100%;
+}
+
+
+.title-container {
+  text-align: center; 
+  padding-bottom: 15px; 
+  padding-top: 15px;
+  border-bottom: 5px solid white;
 }
 
 
@@ -79,13 +91,21 @@ table {
 }
 
 #test {
-  padding-top: 420px;
+  /* padding-top: 1%; */
+  padding-bottom: 2%;
+  border-bottom: solid lightgray 2px;
 
+}
+
+.class{
+  z-index: 1;
 }
 
 body {
   position: relative;
   background-image: url('https://media2.giphy.com/media/Q9aBxHn9fTqKs/giphy.gif');
+  /* margin-left: 8%; */
+
 }
 
 
@@ -136,4 +156,92 @@ body {
   background-color: #3e8e41;
 }
 
+.title {
+  color: white;
+  /* position: absolute; */
+  display: inline-block;
+  font-size: 48px;
+}
 
+.functions {
+  /* border: 1px solid white; */
+  margin-top: 3%;
+  margin-left: 3%;
+  margin-right: 2%;
+  height: 500px;
+  background-color: white;
+  padding: 10px;
+  border: 5px solid green;
+}
+
+.button {
+  background-color: green;
+  color: white;
+  height: 30px;
+  width: 150px;
+  font-size: 16px;
+}
+
+.input-days {
+  padding-top: 2%;
+  align-items: center;
+  padding-bottom: 2%;
+  border-bottom: lightgray solid 2px;
+}
+
+#search {
+  height: 20px;
+  width: 280px;
+  border: 1px, solid, darkgreen;
+}
+
+#coin {
+  height: 20px;
+  width: 180px;
+  border: 1px, solid, darkgreen;
+}
+
+#submit {
+  background-color: darkgreen;
+  color: white;
+  height: 30px;
+  width: 150px;
+}
+
+.main-inputs {
+  padding-top: 2%;
+  padding-bottom: 2%;
+  border-bottom: 2px solid lightgray;
+}
+
+.guide > h1 {
+  padding-top: 2%;
+  padding-bottom: 2%;
+  font-size: 24px;
+}
+
+.guide-list > li{
+  align-items: left;
+}
+
+.guide {
+  padding-bottom: 2%;
+  border-bottom: 2px solid lightgray;
+}
+
+.dropbtn{
+  background-color: darkgreen;
+  color: white;
+  height: 30px;
+  width: 150px;
+}
+
+.new-feature-container {
+  padding-top: 2%;
+  display: inline-block;
+}
+
+.new-feature-body{
+    align-items: center;
+
+}

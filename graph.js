@@ -1,14 +1,25 @@
 
 let days = '';
-let period = '365'
+let period = '365' //
 
 function myFunction() {
   var test = document.getElementById("search").value;
-  console.log(test)
+  var coin = document.getElementById("coin").value;
   period = test;
-  const str = `https://min-api.cryptocompare.com/data/v2/histoday?fsym=BTC&tsym=USD&limit=${period}&api_key=5b30e7d4179a96d32c653107c05339a18d32c3fe4be94a384ca914fb5fc048f3`
+  const str = `https://min-api.cryptocompare.com/data/v2/histoday?fsym=${coin}&tsym=USD&limit=${period}&api_key=5b30e7d4179a96d32c653107c05339a18d32c3fe4be94a384ca914fb5fc048f3`
   window.onload = main(str);
 }
+
+function formFunction() {
+  var test = document.getElementById("submit-test").value;
+  var period = document.getElementById("submit-test2").value;
+  var variable = parseInt(document.getElementById("submit-test3").value);
+  const str = `https://min-api.cryptocompare.com/data/v2/histoday?fsym=BTC&tsym=USD&limit=${period}&api_key=5b30e7d4179a96d32c653107c05339a18d32c3fe4be94a384ca914fb5fc048f3`
+
+  window.onload = main(str, variable)
+}
+ 
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -57,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const str = `https://min-api.cryptocompare.com/data/v2/histoday?fsym=BTC&tsym=USD&limit=${period}&api_key=5b30e7d4179a96d32c653107c05339a18d32c3fe4be94a384ca914fb5fc048f3`
 
-let main = function (str, n = 5) {
+let main = function (str, n = 5, test="moving_average") {
   
   const http = new XMLHttpRequest();
   let priceArray = []
@@ -81,11 +92,14 @@ let main = function (str, n = 5) {
         });
         day = 1;
         let low = Math.min.apply(null, close);
-        let movingAvg = movingAverage(close, 5) 
-        var backtesterArr = close.map(function (e, i) {
-          return [e, movingAvg[i]];
-        });
-        let backtesterVals = backtester(backtesterArr);
+        let movingAvg = movingAverage(close, n) 
+
+        var backtesterArr = [];
+        for (let i = 0; i < close.length; i++){
+          backtesterArr.push([close[i], movingAvg[i]])
+        }
+        
+        let backtesterVals = MA_backtester(backtesterArr);
         backtesterVals.forEach(el => {
           let hold = { label: day, y: el };
           vals.push(hold);
@@ -94,7 +108,7 @@ let main = function (str, n = 5) {
         var chart = new CanvasJS.Chart("chartContainer", {
           animationEnabled: true,
           title: {
-            text: `Bitcoin This Year (change: ${Math.floor(priceArray[priceArray.length - 1].y - priceArray[0].y)})`
+            text: `Bitcoin (change: ${Math.floor(priceArray[priceArray.length - 1].y - priceArray[0].y)})`
           }, 
           toolTip: {
             shared: true
@@ -102,7 +116,13 @@ let main = function (str, n = 5) {
           axisY: {
             minimum: low-200,
           },
-
+          legend: {
+              display: true,
+              position: 'bottom',
+              labels: {
+                fontColor: "#000080",
+              }
+          },
           data: [
             {
               // Change type to "doughnut", "line", "splineArea", etc.
@@ -131,7 +151,7 @@ let main = function (str, n = 5) {
 
 
 
-function backtester(arr) { //basic backtester
+function MA_backtester(arr) { //basic backtester
   var sum = 0;
   for (var i = 0; i < arr.length; i++) {
     sum += arr[i];
@@ -161,7 +181,7 @@ function movingAverage(arr, n = 5) {
   for (let i = 0; i < n-1; i++) {
     output.push(0);
   }
-  for (let i = 5; i < arr.length - 1; i++) {
+  for (let i = n; i < arr.length - 1; i++) {
     let avg = 0;
     for (let j = i - n; j < i; j++){
       avg = avg + arr[j];
@@ -171,4 +191,22 @@ function movingAverage(arr, n = 5) {
   }
   return output;
 }
+
+function BB(arr, n = 5) {
+  let output= [];
+  for (let i = 0; i < n - 1; i++) {
+    output.push(0);
+  }
+  for (let i = n; i < arr.length -1; i++){
+    let hold = [];
+    for (let j = i - n; i < j; j++){
+      hold.push(arr[j]);
+    }
+  }
+
+  return output 
+}
+
+
+
 
